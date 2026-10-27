@@ -1,0 +1,16 @@
+{
+  "flag_threshold": 3,
+  "block_threshold": 8,
+  "max_calls_per_tool": 20,
+  "rules": [
+    {"name":"path_escape",      "tool":"*",     "pattern":"\\.\\./|/etc/|/root/|~/\\.ssh", "severity":8},
+    {"name":"secret_access",    "tool":"*",     "pattern":"\\.env|id_rsa|api[_-]?key|token|password", "severity":8},
+    {"name":"destructive_shell","tool":"shell", "pattern":"rm -rf|mkfs|dd if=|chmod 777|:\\(\\)\\{",  "severity":10},
+    {"name":"privilege_esc",    "tool":"shell", "pattern":"\\bsudo\\b|\\bsu\\b|passwd",             "severity":8},
+    {"name":"outbound_net",     "tool":"shell", "pattern":"curl|wget|nc |ncat|ssh |scp ",           "severity":5},
+    {"name":"persistence",      "tool":"shell", "pattern":"crontab|systemctl|\\.bashrc|rc\\.local",  "severity":8},
+    {"name":"self_modify",      "tool":"*",     "pattern":"monitor\\.py|rules\\.json|agent\\.py",    "severity":10},
+    {"name":"exfil_url",        "tool":"http",  "pattern":"pastebin|ngrok|discord\\.com/api|webhook","severity":8},
+    {"name":"unknown_host",     "tool":"http",  "pattern":"^(?!.*(localhost|127\\.0\\.0\\.1)).*https?://", "severity":3}
+  ]
+}
